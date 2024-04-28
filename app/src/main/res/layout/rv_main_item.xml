@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:background="@color/black"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textFontWeight="20"
+        android:text="TextView" />
+
+
+    <WebView
+        android:id="@+id/wv_imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        />
+
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textColor="@color/white"
+        android:layout_margin="12dp"
+        android:text="TextView" />
+    <TextView
+        android:id="@+id/tvMovieText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textColor="@color/white"
+        android:layout_weight="4"
+        android:layout_margin="12dp"
+        android:text="TextView" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_margin="20dp"
+        android:background="#FF0000"/>
+
+</LinearLayout>
