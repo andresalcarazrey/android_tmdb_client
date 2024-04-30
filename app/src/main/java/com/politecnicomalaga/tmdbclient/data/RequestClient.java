@@ -2,9 +2,11 @@ package com.politecnicomalaga.tmdbclient.data;
 
 import com.google.gson.Gson;
 import com.politecnicomalaga.tmdbclient.control.MoviesViewModel;
+import com.politecnicomalaga.tmdbclient.model.MovieResultSet;
 import com.politecnicomalaga.tmdbclient.model.MovieSerieItem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 //Clase para realizar la petición y recibir la respuesta desde Internet de la API Rest
@@ -50,12 +52,12 @@ https://image.tmdb.org/t/p/w500/h4FuqnkBrZ6Wxi4TEeB99QvL590.jpg
     public void setDataFromRESTAPI(String json) {
         //Procesar el JSON para pasarlo a objetos del modelo, una lista de películas o series
         Gson gson = new Gson();
-        // gson.fromJson(json, MovieSerieItem[].class);
+        MovieResultSet result = gson.fromJson(json, MovieResultSet.class);
 
         //TEST
-        listData.clear();
-        listData.add(new MovieSerieItem("https://image.tmdb.org/t/p/w500/h4FuqnkBrZ6Wxi4TEeB99QvL590.jpg","The Goonies","Family/Adventures","This movie from the 80's was an iconic adventure movie for kids and teenagers"));
-        listData.add(new MovieSerieItem("https://image.tmdb.org/t/p/w500/h4FuqnkBrZ6Wxi4TEeB99QvL590.jpg","The Goonies","Family/Adventures","This movie from the 80's was an iconic adventure movie for kids and teenagers"));
+        //listData.clear();
+        listData = Arrays.asList(result.getResults());
+        //listData.add(new MovieSerieItem("https://image.tmdb.org/t/p/w500/h4FuqnkBrZ6Wxi4TEeB99QvL590.jpg","The Goonies","Family/Adventures","This movie from the 80's was an iconic adventure movie for kids and teenagers"));
         this.vmInstance.setData();
     }
 

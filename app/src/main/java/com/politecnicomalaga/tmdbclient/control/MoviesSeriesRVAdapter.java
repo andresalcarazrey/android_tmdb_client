@@ -38,7 +38,8 @@ public class MoviesSeriesRVAdapter extends RecyclerView.Adapter<MoviesSeriesView
         //TODO: fill data
         MovieSerieItem msi = this.dataList.get(position);
 
-        holder.getImage().loadUrl(msi.getImageURL());
+        String html = "<html><body><img src=\"" + msi.getImageURL() + "\" width=\"100%\" height=\"100%\"\"/></body></html>";
+        holder.getImage().loadData(html, "text/html", null);
         holder.getTitle().setText(msi.getTitle());
         holder.getSubtitle().setText(msi.getSubtitle());
         holder.getText().setText(msi.getText());

@@ -16,15 +16,15 @@ public class MoviesViewModel extends ViewModel {
     public LiveData<List<MovieSerieItem>> getResults() {
         if (listaResultados == null) {
             listaResultados = new MutableLiveData<List<MovieSerieItem>>();
-            loadData();
+            loadData("movies");
         }
         return listaResultados;
     }
 
-    private void loadData() {
+    public void loadData(String search) {
         // Do an asynchronous operation to fetch data.
         myRequest = new RequestClient(this);
-        myRequest.getDataFromRESTAPI("movies");
+        myRequest.getDataFromRESTAPI(search);
         this.setData();
     }
 

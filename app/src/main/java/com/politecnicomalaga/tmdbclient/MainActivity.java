@@ -1,6 +1,8 @@
 package com.politecnicomalaga.tmdbclient;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,15 +30,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-
-
         //Init components. Main Buttons and RecyclerView
 
-        //Buttons
+        //Get the "controller" between the recyclerview and the model
+        MoviesViewModel vmodel = new ViewModelProvider(this).get(MoviesViewModel.class);
 
         //Recycler trending movies or series
-        MoviesViewModel vmodel = new ViewModelProvider(this).get(MoviesViewModel.class);
+
         vmodel.getResults().observe(this, movieSerieItems -> {
             // update UI
             // Get a handle to the RecyclerView.
@@ -49,6 +49,27 @@ public class MainActivity extends AppCompatActivity {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         });
+
+
+        //Buttons
+        Button bMovie = (Button) findViewById(R.id.btSearchMovies);
+
+        bMovie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                vmodel.loadData("movies");
+            }
+        });
+
+        Button bSeries = (Button) findViewById(R.id.btSearchSeries);
+
+        bSeries.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                vmodel.loadData("series");
+            }
+        });
+
 
 
     }
