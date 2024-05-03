@@ -1,9 +1,13 @@
 package com.politecnicomalaga.tmdbclient.model;
 
+/**
+ * Clase para encapsular los datos de una peli o serie
+ * Está diseñada siguiendo las indicaciones del JSON que nos da TMDB para cada peli o serie
+ */
 public class MovieSerieItem {
 
 
-    //JSON Movie Item:
+    //JSON Movie Item: Ejemplo del JSON que representa a UNA peli
     /*
         "adult":false,
     "backdrop_path":"/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg",
@@ -38,21 +42,34 @@ public class MovieSerieItem {
     private float vote_average;
     private long vote_count;
     private String title;
+    private String original_name;
+    private String name;
 
 
     public MovieSerieItem() {
     }
 
+    //Realmente no hay un atributo imageURL, pero YO SE que "http://image.tmdb.org/t/p/wSIZE + poster path
+    //contendrá una imagen del ancho SIZE. Uno de los anchos disponibles es 500px. Hay más.
     public String getImageURL() {
         return "https://image.tmdb.org/t/p/w500" + poster_path;
     }
 
+    //Aquí lo mismo que en los demás métodos, escogemos un getter más genérico y le damos el dato
+    //que nos interese
     public String getTitle() {
+        if (title == null || title.isEmpty()) return name;
         return title;
     }
 
+    //Aquí volvemos a "cambiar" el nombre del método get para hacerlo más "amable" al uso en nuestra app
+    //Así, si queremos cambiar que dato se ve como segundo dato, podemos elegir el que nos de la gana
+    //aquí
     public String getSubtitle() {
-        return release_date;
+        if (release_date == null || release_date.isEmpty()) {
+            return "Popularity: " + popularity;
+        } else
+            return release_date;
     }
 
     public String getText() {
@@ -165,5 +182,21 @@ public class MovieSerieItem {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getOriginal_name() {
+        return original_name;
+    }
+
+    public void setOriginal_name(String original_name) {
+        this.original_name = original_name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

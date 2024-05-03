@@ -1,5 +1,9 @@
 package com.politecnicomalaga.tmdbclient.model;
 
+/**
+ * Esta clase encapsula TODO un JSON completo devuelto desde TMDB ante una petición
+ * Es una clase muy simple a imagen y semejanza de su json para usarla con GSON
+ */
 public class MovieResultSet {
     private int page;
     private MovieSerieItem[] results;

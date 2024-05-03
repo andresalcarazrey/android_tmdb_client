@@ -16,11 +16,14 @@ import okhttp3.Response;
 /**
  * Clase DataMovieAccess
  *
- * Es utilizado por el controlador. El controlador le proporciona
+ * Es utilizado por la clase RequesClient. El RequestClient le proporciona
  * los datos necesarios
  *
- * Se apoyará en OkHttp (librería cliente http/http2)
- * Solicita una lista JSON de películas
+ * Se apoyará en OkHttp (librería cliente http/https)
+ * Solicita una lista JSON de películas o series, y se la pasa al client para que parsee el json
+ * Su única responsabilidad es obtener una petición desde client, darle forma de petición HTTP, lanzarla,
+ * gestionar las dos posibiliades (se obtuvieron datos o falló) y comunicar al client que ya tiene
+ * los resultados.
  */
 
 
@@ -29,6 +32,9 @@ public class DataMovieAccess {
     //ESTADO
     //Clase utilidad que no necesita nada más que poner a funcionar la peticion HTTPs
     // y una referencia al solicitante de información
+
+    //Un bearer key es una API_KEY que no va como parámetro clásico, sino dentro de las cabeceras HTTP (más seguro)
+    //Nos la da la web TMDB después de registrarnos y solicitarla, es gratis
     private static final String API_BEARER_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NTEwOTJjNDU1NDE4NzA1Y2E0ZjcyNzk0ZjczZDcyOCIsInN1YiI6IjY2MmNmOGVlNWI5NTA4MDEyMjU1NWFhZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.5F5DQF3g7uAfqBcfjNdqMu1nV1UCzyjPY9l8uYSDRT0";
 
     //Referencia al cliente que necesita la información, como es asíncrono, lo necesitamos
@@ -45,36 +51,46 @@ public class DataMovieAccess {
         //Cliente HTTP
         OkHttpClient clientHTTP = new OkHttpClient();
 
-        //Petición a realizar al cliente HTTP
+        //Petición a realizar al cliente HTTP. Patrón de diseño "Builder". Es decir "poco a poco"
         Request request = new Request.Builder()
-                .url(URL)
-                .get()
-                .addHeader("accept", "application/json")
-                .addHeader("Authorization", "Bearer " + API_BEARER_KEY)
-                .build();
+                .url(URL)  //dirección web
+                .get()     //método http a utilizar
+                .addHeader("accept", "application/json")  //Qué formato queremos
+                .addHeader("Authorization", "Bearer " + API_BEARER_KEY) //clave de identidad
+                .build();   //a construir la request!!
 
         //realizamos la llamada al server, pero en otro thread (con enqueue)
+        //Primero, una llamada al server
         Call llamada = clientHTTP.newCall(request);
+        //Ponemos la llamada en cola para que salga por la tarjeta de red que tengamos en el móvil activa, y creamos un
+        //objeto anónimo CallBack (llamada de vuelta cuando están los datos)
+        //Un callback tiene override de onResponse (la petición se ha atendido perfectamente) y
+        //override de onFailure (evento de "algo salió mal")
         llamada.enqueue(new Callback() {
             public void onResponse(Call call, Response respuestaServer)
                     throws IOException {
-                //Got answer!!!!!
+                //Got answer!!!!! cogemos los datos dentro del body del mensaje
                 String respuesta = respuestaServer.body().string();
 
                 // Create a handler that associated with Looper of the main thread
-                Handler manejador = new Handler(Looper.getMainLooper());
+                //Un manejador es un "bucle" en esencia que ejecuta uno a uno todos los procesos de la App
+                Handler manejador = new Handler(Looper.getMainLooper()); //pedimos el principal de la app
                 // Send a task to the MessageQueue of the main thread
                 manejador.post(new Runnable() {
                     @Override
                     public void run() {
                         // Code will be executed on the main thread
+                        //Este es código que realmente se ejecuta cuando se recibe la respuesta.
                         client.setDataFromRESTAPI(respuesta);
                     }
                 });
             }
 
             public void onFailure(Call call, IOException e) {
-                String respuesta = e.getMessage();
+                //Cuidado, puede que haya alguna vez un fallo en la respuesta. Entonces entra por aquí
+                String respuesta = e.getMessage(); //Fijaros que nos pasan la excepción con el problema.
+                //Lo típico es "sacar" el string mensaje de la exceptión y mandarla al sistema principal para
+                //que se vea que ha pasado
                 Handler manejador = new Handler(Looper.getMainLooper());
 
                 // Send a task to the MessageQueue of the main thread
@@ -82,8 +98,9 @@ public class DataMovieAccess {
                     @Override
                     public void run() {
                         // Code will be executed on the main thread
-                        client.setDataFromRESTAPI(respuesta);
                         client.activateError();
+                        client.setDataFromRESTAPI(respuesta);
+
                     }
                 });
             }
