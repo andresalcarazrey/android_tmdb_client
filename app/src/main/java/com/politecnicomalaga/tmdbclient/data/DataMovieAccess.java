@@ -35,7 +35,7 @@ public class DataMovieAccess {
 
     //Un bearer key es una API_KEY que no va como parámetro clásico, sino dentro de las cabeceras HTTP (más seguro)
     //Nos la da la web TMDB después de registrarnos y solicitarla, es gratis
-    private static final String API_BEARER_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NTEwOTJjNDU1NDE4NzA1Y2E0ZjcyNzk0ZjczZDcyOCIsInN1YiI6IjY2MmNmOGVlNWI5NTA4MDEyMjU1NWFhZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.5F5DQF3g7uAfqBcfjNdqMu1nV1UCzyjPY9l8uYSDRT0";
+    private static final String API_BEARER_KEY = "PONER_AQUI_VUESTRA_BEARER_KEY_DEL_SERVER_TMDB";
 
     //Referencia al cliente que necesita la información, como es asíncrono, lo necesitamos
     //para "informarle" cuando los datos están disponibles
