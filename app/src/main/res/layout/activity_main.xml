@@ -5,8 +5,22 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/tvMainTitle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_weight="1"
+        android:text="TMDB Series and Movies Database"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@id/llButtons"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
         android:id="@+id/llButtons"
@@ -17,13 +31,15 @@
         app:layout_constraintBottom_toTopOf="@id/rvMain"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvMainTitle"
         >
         <Button
             android:id="@+id/btSearchMovies"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
+            app:backgroundTint="#CCFF00"
+            android:textColor="@color/black"
             android:text="Movies"
              />
 
@@ -31,6 +47,8 @@
             android:id="@+id/btSearchSeries"
             android:layout_width="0dp"
             android:layout_weight="1"
+            app:backgroundTint="#FFCC00"
+            android:textColor="@color/black"
             android:layout_height="match_parent"
             android:text="Series"
             />
@@ -42,7 +60,7 @@
         android:id="@+id/rvMain"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintVertical_weight="6"
+        app:layout_constraintVertical_weight="15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/llButtons"
         app:layout_constraintEnd_toEndOf="parent"
