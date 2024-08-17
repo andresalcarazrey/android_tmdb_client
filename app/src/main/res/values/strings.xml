@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">TMDBClient</string>
+    <string name="textoTitulo">Bienvenidos</string>
+
+    <string-array
+        name="preguntas">
+        <item>¿Qué monumento de los siguientes está en la barriada de Huelin?</item>
+        <item>¿Qué torre está en la playa de la miseriordia?</item>
+        <item>¿Qué convento de Huelin se utilizó para crear crisoles?</item>
+        <item>¿Qué monumento de los siguientes está en la barriada de Huelin?</item>
+        <item>¿Qué monumento de los siguientes está en la barriada de Huelin?</item>
+        <item>¿Qué monumento de los siguientes está en la barriada de Huelin?</item>
+        <item>¿Qué monumento de los siguientes está en la barriada de Huelin?</item>
+        <item>¿Qué monumento de los siguientes está en la barriada de Huelin?</item>
+    </string-array>
+
+
 </resources>

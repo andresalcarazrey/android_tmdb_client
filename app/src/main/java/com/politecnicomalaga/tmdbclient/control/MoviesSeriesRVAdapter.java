@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.politecnicomalaga.tmdbclient.R;
+import com.politecnicomalaga.tmdbclient.model.MovieResultSet;
 import com.politecnicomalaga.tmdbclient.model.MovieSerieItem;
 
 import java.util.List;
@@ -27,9 +28,9 @@ public class MoviesSeriesRVAdapter extends RecyclerView.Adapter<MoviesSeriesView
 
 
     private LayoutInflater mInflater;
-    private List<MovieSerieItem> dataList;
-    public MoviesSeriesRVAdapter(Context ct, List<MovieSerieItem> dataList) {
-        this.dataList = dataList;
+    private MovieResultSet data;
+    public MoviesSeriesRVAdapter(Context ct, MovieResultSet data) {
+        this.data = data;
         mInflater = LayoutInflater.from(ct);
     }
 
@@ -51,7 +52,7 @@ public class MoviesSeriesRVAdapter extends RecyclerView.Adapter<MoviesSeriesView
         //Lo primero, ver que indice de la lista se quiere pasar a la pantalla, eso el argumento position
         //RECORDAD, estos métodos los usa el propio sistema ANDRIOD. Están "prefabricados" a falta de que vosotros
         //lo reutilicéis
-        MovieSerieItem msi = this.dataList.get(position);
+        MovieSerieItem msi = this.data.getResults()[position];
 
 
         //TRUCO para mostrar imágenes con zoom dentro de un recuadro para webs. Se encapsula la imagen en HTML
@@ -65,7 +66,8 @@ public class MoviesSeriesRVAdapter extends RecyclerView.Adapter<MoviesSeriesView
 
     @Override
     public int getItemCount() {
-        return dataList.size();
+        if (data == null) return 0;
+        return data.getResults().length;
     }
 
 

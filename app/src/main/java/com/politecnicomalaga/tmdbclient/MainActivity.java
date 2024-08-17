@@ -17,6 +17,9 @@ import com.politecnicomalaga.tmdbclient.control.MoviesSeriesRVAdapter;
 import com.politecnicomalaga.tmdbclient.control.MoviesViewModel;
 import com.politecnicomalaga.tmdbclient.data.RequestClient;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity {
 
     //Método onCreate: es el primero que se ejecuta en una app android, en una activity (pantalla)
@@ -52,12 +55,12 @@ public class MainActivity extends AppCompatActivity {
         //Estructura: viewmodelobject.getResults().observe(activity, listadecosasamostrar -> {
         //    proceso de actualización del RecyclerView (Lambda function/method)
         // });
-        vmodel.getResults().observe(this, movieSerieItems -> {
+        vmodel.getResults().observe(this, movieResultSet -> {
             // update UI
             // Cogemos el RV (RecyclerView)
             RecyclerView mRecyclerView = findViewById(R.id.rvMain);
             // Creamos un adapter con un enlace a la activity y a los datos a usar
-            MoviesSeriesRVAdapter mAdapter = new MoviesSeriesRVAdapter(this, movieSerieItems);
+            MoviesSeriesRVAdapter mAdapter = new MoviesSeriesRVAdapter(this, movieResultSet);
             // Conectamos el adapter y el RV
             mRecyclerView.setAdapter(mAdapter);
             // Asignamos al RV un tipo de layout manager por defecto: típicamente el LinearLayoutManager
@@ -90,6 +93,27 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        /*Button buSig = (Button) findViewById(R.id.);
 
+        buSig.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                vmodel.loadSiguiente();
+            }
+        });
+
+        Button buAnt = (Button) findViewById(R.id.);
+
+        buAnt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                vmodel.loadAnterior();
+            }
+        });*/
+
+        String titulo = getResources().getString(R.string.textoTitulo);
+
+        String[] miListadePreguntas = getResources().getStringArray(R.array.preguntas);
+        ArrayList<String> miListaAL = new ArrayList<>(Arrays.asList(miListadePreguntas));
     }
 }

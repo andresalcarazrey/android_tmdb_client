@@ -11,7 +11,11 @@ public class MovieResultSet {
     private int total_results;
 
     public MovieResultSet() {
+        page = 0;
+        results = new MovieSerieItem[0];
 
+        total_results = 0;
+        total_pages = 0;
     }
 
     public int getPage() {

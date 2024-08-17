@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.politecnicomalaga.tmdbclient.data.RequestClient;
+import com.politecnicomalaga.tmdbclient.model.MovieResultSet;
 import com.politecnicomalaga.tmdbclient.model.MovieSerieItem;
 
 import java.util.List;
@@ -30,18 +31,18 @@ import java.util.List;
 public class MoviesViewModel extends ViewModel {
 
     //Siempre es habitual meter la listadeloquesea como MutableLiveData<List<ClaseItemLaQueSea>>
-    private MutableLiveData<List<MovieSerieItem>> listaResultados;
+    private MutableLiveData<MovieResultSet> resultados;
 
     //Es necesario que el vm recuerde a quién le pide la info, pues cuando este Client esté listo nos
     //avisará con un "setData"
     private RequestClient myRequest;
-    public LiveData<List<MovieSerieItem>> getResults() {
-        if (listaResultados == null) {
-            listaResultados = new MutableLiveData<List<MovieSerieItem>>();
+    public LiveData<MovieResultSet> getResults() {
+        if (resultados == null) {
+            resultados = new MutableLiveData<MovieResultSet>();
             //Por defecto, mostramos las pelis
             loadData(RequestClient.TipoBusqueda.MOVIES);
         }
-        return listaResultados;
+        return resultados;
     }
 
     public void loadData(RequestClient.TipoBusqueda tipo) {
@@ -52,7 +53,9 @@ public class MoviesViewModel extends ViewModel {
     }
 
     public void setData() {
-        listaResultados.postValue(myRequest.getListData());
+        resultados.postValue(myRequest.getData());
     }
+
+
 
 }

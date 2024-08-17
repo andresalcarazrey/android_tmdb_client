@@ -30,7 +30,7 @@ public class RequestClient {
 
     //Atributos
     private boolean error;
-    private List<MovieSerieItem> listData;
+    private MovieResultSet data;
     private MoviesViewModel vmInstance;
 
     //Vamos a distinguir tres tipos de búsquedas, mejores pelis, mejores series, pelis/series con título que contenga
@@ -46,7 +46,6 @@ public class RequestClient {
     public RequestClient(MoviesViewModel vmInstance) {
         error = false;
         this.vmInstance = vmInstance;
-        listData = new ArrayList<>();
     }
 
     //Método usado para seleccionar el tipo de búsqueda que pediremos a TMDB
@@ -74,11 +73,7 @@ public class RequestClient {
 
         //Procesar el JSON para pasarlo a objetos del modelo, una lista de películas o series
         Gson gson = new Gson();
-        MovieResultSet result = gson.fromJson(json, MovieResultSet.class);
-
-        //del MovieResultSet nos interesa por ahora la lista de pelis/series
-        listData = Arrays.asList(result.getResults());
-
+        this.data = gson.fromJson(json, MovieResultSet.class);
         //Notificamos al viewmodel
         this.vmInstance.setData();
     }
@@ -91,8 +86,8 @@ public class RequestClient {
         return error;
     }
 
-    public List<MovieSerieItem> getListData() {
-        return listData;
+    public MovieResultSet getData() {
+        return data;
     }
 }
 
