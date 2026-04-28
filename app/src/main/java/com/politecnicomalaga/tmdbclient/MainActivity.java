@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.politecnicomalaga.tmdbclient.control.MoviesSeriesRVAdapter;
 import com.politecnicomalaga.tmdbclient.control.MoviesViewModel;
 import com.politecnicomalaga.tmdbclient.data.RequestClient;
+import com.politecnicomalaga.tmdbclient.model.MovieResultSet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         //Estructura: viewmodelobject.getResults().observe(activity, listadecosasamostrar -> {
         //    proceso de actualización del RecyclerView (Lambda function/method)
         // });
+
         vmodel.getResults().observe(this, movieResultSet -> {
             // update UI
             // Cogemos el RV (RecyclerView)
